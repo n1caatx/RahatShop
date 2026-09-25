@@ -1,0 +1,35 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'backend/**'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'backend/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      - name: Kodu yüklə
+        uses: actions/checkout@v4
+
+      - name: JDK 21 quraşdır
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Testləri işlət
+        run: ./mvnw -B verify
+
+      - name: JAR paket yarat
+        run: ./mvnw -B package -DskipTests

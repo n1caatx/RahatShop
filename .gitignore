@@ -1,0 +1,21 @@
+# .gitignore
+# Java və Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+**/src/main/java/**/generated/**
+# Spring Boot
+*.log
+# Node.js və Next.js
+node_modules/
+/.next/
+/.env
+/.env.local
+# IDE-lər
+.idea/
+*.iml
+*.classpath
+*.project
+*.settings/
+# OS faylları
+.DS_Store
+Thumbs.db
