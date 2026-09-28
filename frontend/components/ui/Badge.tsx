@@ -3,14 +3,28 @@ interface BadgeProps {
 }
 
 export default function Badge({ type }: BadgeProps) {
-  let bgColor = 'bg-gray-500';
-  
-  if (type === 'VIP') bgColor = 'bg-yellow-500';
-  if (type === 'TOP') bgColor = 'bg-red-500';
-  if (type === 'Premium') bgColor = 'bg-orange-500';
+  let badgeStyle =
+    'bg-gradient-to-r from-slate-500 to-slate-600 text-white';
+
+  if (type === 'VIP') {
+    badgeStyle =
+      'bg-gradient-to-r from-amber-400 to-orange-500 text-white';
+  }
+
+  if (type === 'TOP') {
+    badgeStyle =
+      'bg-gradient-to-r from-rose-500 to-red-600 text-white';
+  }
+
+  if (type === 'Premium') {
+    badgeStyle =
+      'bg-gradient-to-r from-orange-500 to-amber-600 text-white';
+  }
 
   return (
-    <span className={`${bgColor} text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wide shadow-sm`}>
+    <span
+      className={`inline-flex items-center rounded-md px-2 py-1 text-[10px] font-bold uppercase tracking-wide shadow-sm ${badgeStyle}`}
+    >
       {type}
     </span>
   );

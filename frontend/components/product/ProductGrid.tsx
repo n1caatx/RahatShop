@@ -8,35 +8,37 @@ interface ProductGridProps {
   loading?: boolean;
 }
 
-export default function ProductGrid({ products, loading = false }: ProductGridProps) {
+export default function ProductGrid({
+  products,
+  loading = false,
+}: ProductGridProps) {
   if (loading) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {[...Array(8)].map((_, i) => (
-          <ProductSkeleton key={i} />
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5 lg:grid-cols-4">
+        {[...Array(8)].map((_, index) => (
+          <ProductSkeleton key={index} />
         ))}
       </div>
     );
   }
 
   if (products.length === 0) {
-    return <EmptyState title="Məhsul tapılmadı" description="Hal-hazırda heç bir məhsul yoxdur." />;
+    return (
+      <div className="rounded-3xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-8 shadow-sm">
+        <EmptyState
+          title="Məhsul tapılmadı"
+          description="Hal-hazırda heç bir məhsul yoxdur."
+        />
+      </div>
+    );
   }
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5 lg:grid-cols-4">
       {products.map((product) => (
         <ProductCard
           key={product.id}
-          id={product.id}
-          title={product.title}
-          slug={product.slug}
-          price={product.price}
-          city={product.city}
-          storeName={product.storeName}
-          imageUrl={product.imageUrl}
-          condition={product.condition}
-          promotionType={product.promotionType}
+          product={product}
         />
       ))}
     </div>

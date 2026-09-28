@@ -3,16 +3,183 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-gray-50 text-gray-900 font-sans;
+  * {
+    box-sizing: border-box;
   }
+
   html {
     scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-screen font-sans antialiased text-slate-900;
+
+    background:
+      radial-gradient(
+        circle at 8% 0%,
+        rgba(59, 130, 246, 0.09),
+        transparent 28%
+      ),
+      radial-gradient(
+        circle at 92% 8%,
+        rgba(168, 85, 247, 0.08),
+        transparent 26%
+      ),
+      radial-gradient(
+        circle at 50% 55%,
+        rgba(34, 211, 238, 0.045),
+        transparent 30%
+      ),
+      linear-gradient(
+        180deg,
+        #f8fafc 0%,
+        #f1f5f9 45%,
+        #f8fafc 100%
+      );
+  }
+
+  ::selection {
+    background: rgba(59, 130, 246, 0.2);
+    color: #0f172a;
+  }
+
+  button,
+  a,
+  input {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  .glass {
+    background: rgba(255, 255, 255, 0.74);
+    border: 1px solid rgba(15, 23, 42, 0.07);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .surface {
+    background: linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #f8fafc 100%
+    );
+
+    border: 1px solid rgba(15, 23, 42, 0.07);
+  }
+
+  .surface-hover {
+    transition:
+      transform 300ms ease,
+      border-color 300ms ease,
+      background-color 300ms ease,
+      box-shadow 300ms ease;
+  }
+
+  .surface-hover:hover {
+    background: linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #f1f5f9 100%
+    );
+
+    border-color: rgba(59, 130, 246, 0.25);
+
+    box-shadow:
+      0 18px 50px rgba(15, 23, 42, 0.08),
+      0 0 30px rgba(59, 130, 246, 0.06);
+
+    transform: translateY(-2px);
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+  }
+
+  .text-gradient {
+    background: linear-gradient(
+      100deg,
+      #2563eb 0%,
+      #6366f1 48%,
+      #0891b2 100%
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .soft-glow {
+    box-shadow:
+      0 0 0 1px rgba(59, 130, 246, 0.04),
+      0 12px 40px rgba(15, 23, 42, 0.08);
   }
 }
 
 @layer utilities {
-  .focus-ring {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066CC] focus-visible:ring-offset-2;
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .rgb-glow {
+    box-shadow:
+      0 0 25px rgba(59, 130, 246, 0.12),
+      0 0 55px rgba(139, 92, 246, 0.08);
+  }
+
+  /*
+   * ============================================
+   * CATEGORY CONTINUOUS MARQUEE
+   * ============================================
+   *
+   * 28 saniyəlik davamlı animasiya.
+   * Burada heç bir 1.8 saniyəlik dayanma yoxdur.
+   * Kartlar daim hərəkətdədir.
+   */
+  .category-marquee {
+    animation: category-scroll 28s linear infinite;
+    will-change: transform;
+  }
+
+  /*
+   * Mouse üstünə gələndə animasiya dayanır.
+   * İstəsən bunu da silə bilərik ki, mouse üzərində
+   * olanda belə dayanmadan davam etsin.
+   */
+  .category-marquee:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes category-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 8px));
+  }
+}
+
+/*
+ * Mobil cihazlarda bir az daha sürətli.
+ */
+@media (max-width: 640px) {
+  .category-marquee {
+    animation-duration: 22s;
+  }
+}
+
+/*
+ * İstifadəçi sistemində hərəkəti azaltmaq seçilibsə,
+ * animasiyanı söndürürük.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .category-marquee {
+    animation: none;
   }
 }
